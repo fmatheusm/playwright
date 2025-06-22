@@ -1,0 +1,30 @@
+{
+    "user": [
+        {
+            "email": "qa@teste.com",
+            "pwd": "12345"
+        },
+        {
+            "email": "teste.errado@gmail.com",
+            "pwd": "123435"
+        }
+    ],
+    "userSemCampo": [
+        {
+            "email": "",
+            "pwd": "12345"
+        },
+        {
+            "email": "teste.errado@gmail.com",
+            "pwd": ""
+        }
+    ],
+    "mensagens": {
+        "naoAutorizado": "Você não está autorizado a acessar este recurso",
+        "emailInvalido": "E-mail inválido"
+    },
+    "camposObrigatorios": [
+        "E-mail é obrigatório",
+        "Senha é obrigatória"
+    ]
+}
