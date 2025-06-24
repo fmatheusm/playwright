@@ -16,5 +16,4 @@ test.describe("Pagina Inicial", () => {
         const tituloPassagens = page.getByTestId('titulo-passagens');
         await expect(tituloPassagens).toBeVisible();
     });
-
 });
