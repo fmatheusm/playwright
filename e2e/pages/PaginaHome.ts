@@ -9,7 +9,7 @@ export default class PaginaHome {
     private readonly addAdulto: Locator;
     private readonly addCriancas: Locator;
     private readonly addBebes: Locator;
-    private readonly botaoBuscar: Locator;
+    private readonly botaoFecharModalPassageiros: Locator;
     private readonly inputDataIda: Locator;
     private readonly botaoBuscarPassagem: Locator;
     private readonly textoIdaVolta: Locator;
@@ -41,7 +41,7 @@ export default class PaginaHome {
         this.addBebes = page.getByTestId("seletor-passageiro-bebes")
             .locator("[alt='Ícone do operador de adição']");
 
-        this.botaoBuscar = page.getByTestId("fechar-modal-passageiros");
+        this.botaoFecharModalPassageiros = page.getByTestId("fechar-modal-passageiros");
 
         this.inputDataIda = page.getByTestId("campo-data-ida");
 
@@ -59,4 +59,43 @@ export default class PaginaHome {
     async visitar() {
         await this.page.goto("/");
     }
+
+    async definirSomenteIda() {
+        await this.botaoSomenteIda.click();
+    }
+
+    async abrirModalPassageiros() {
+        await this.botaoPassageiros.click();
+    }
+
+    async definirPassageirosAdultos(quantidade: number) {
+        for (let i = 1; i < quantidade; i++) {
+            await this.addAdulto.click();
+        }
+    };
+
+    async definirPassageirosCriancas(quantidade: number) {
+        for (let i = 1; i <= quantidade; i++) {
+            await this.addCriancas.click();
+        }
+    };
+
+    async definirPassageirosBebes(quantidade: number) {
+        for (let i = 1; i <= quantidade; i++) {
+            await this.addBebes.click();
+        }
+    };
+
+    async fecharModalPassageiros() {
+        await this.botaoFecharModalPassageiros.click();
+    }
+
+    async definirOrigemEDestino(origem: string, destino: string) {
+        await this.campoDropDownOrigem.fill(origem);
+        await this.campoDropDownOrigem.press('Enter');
+
+        await this.campoDropDownDestino.fill(destino);
+        await this.campoDropDownDestino.press('Enter');
+    }
+
 }
