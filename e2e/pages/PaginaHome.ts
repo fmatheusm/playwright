@@ -1,4 +1,12 @@
-import { Page, Locator } from "@playwright/test";
+import { Page, Locator, expect } from "@playwright/test";
+import { test as testPl } from '@playwright/test';
+
+export const test = testPl.extend<{ paginaHome: PaginaHome }>({
+    paginaHome: async ({ page }, use) => {
+        const paginaHome = new PaginaHome(page);
+        await use(paginaHome);
+    }
+});
 
 export default class PaginaHome {
     private readonly page: Page;
@@ -97,5 +105,24 @@ export default class PaginaHome {
         await this.campoDropDownDestino.fill(destino);
         await this.campoDropDownDestino.press('Enter');
     }
+
+    async definirData(data: Date) {
+        const dataFormatada = data.toLocaleString('en-US', { dateStyle: 'short' });
+        await this.inputDataIda.fill(dataFormatada);
+    };
+
+    async buscarPassagens() {
+        await this.botaoBuscarPassagem.click();
+    }
+
+    async estaMostrandoPassagem(
+        tipoTrajeto: 'Somente ida' | 'Ida e volta',
+        origem: string,
+        destino: string,
+    ) {
+        await expect(this.textoIdaVolta).toHaveText(tipoTrajeto);
+        await expect(this.containerOrigem).toContainText(origem);
+        await expect(this.containerDestino).toContainText(destino);
+    };
 
 }

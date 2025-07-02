@@ -1,12 +1,11 @@
-import test from "@playwright/test";
-import PaginaHome from "./pages/PaginaHome";
+import { test } from "./pages/PaginaHome";
 import ExemploPaginaPrincipal from "./pages/PaginaHomeExemplo";
 
 test.describe("Buscar Passagens", () => {
-    test("Deve buscar passagem de apenas de ida", async ({ page }) => {
-        const paginaHome = new PaginaHome(page);
-
+    test.beforeEach(async ({ paginaHome }) => {
         await paginaHome.visitar();
+    })
+    test("Deve buscar passagem de apenas de ida", async ({ paginaHome }) => {
         await paginaHome.definirSomenteIda();
 
         await paginaHome.abrirModalPassageiros();
@@ -16,9 +15,13 @@ test.describe("Buscar Passagens", () => {
         await paginaHome.fecharModalPassageiros();
 
         await paginaHome.definirOrigemEDestino('minas gerais', 'rio de janeiro');
+        await paginaHome.definirData(new Date());
+        await paginaHome.buscarPassagens();
+
+        await paginaHome.estaMostrandoPassagem('Somente ida', 'Minas Gerais', 'Rio de Janeiro')
     })
 
-    test("EXEMPLO dev buscar passagem apenas de ida", async ({ page }) => {
+    test.skip("EXEMPLO dev buscar passagem apenas de ida", async ({ page }) => {
         const exemploPaginaPrincipal = new ExemploPaginaPrincipal(page);
 
         await exemploPaginaPrincipal.visitar();
